@@ -3,10 +3,10 @@ Connect-AzAccount
 
 # Variablen
 $resourceGroup = "m300-projekt-rg"
-$location = "westeurope"
+$location = "switzerlandnorth"
 $appServicePlan = "m300-app-plan"
 $webApp = "m300-inventar-api"
-$sqlServer = "m300sqlserver123"
+$sqlServer = "m300sqlserver-noah"
 $sqlDb = "InventarDB"
 
 # Ressourcengruppe
@@ -21,3 +21,6 @@ New-AzWebApp -Name $webApp -Location $location -AppServicePlan $appServicePlan -
 # SQL Server & DB
 New-AzSqlServer -ResourceGroupName $resourceGroup -ServerName $sqlServer -Location $location -SqlAdministratorCredentials (Get-Credential)
 New-AzSqlDatabase -ResourceGroupName $resourceGroup -ServerName $sqlServer -DatabaseName $sqlDb -RequestedServiceObjectiveName "Basic"
+
+
+# login : sqladmin pasword: sqladmin123!
