@@ -14,4 +14,4 @@ New-AzResourceGroup -Name $resourceGroup -Location $location -ErrorAction Silent
 New-AzAppServicePlan -Name $appServicePlan -Location $location -ResourceGroupName $resourceGroup -Tier Free -ErrorAction SilentlyContinue
 
 # Web App
-New-AzWebApp -Name $webApp -Location $location -AppServicePlan $appServicePlan -ResourceGroupName $resourceGroup -LinuxFxVersion "NODE|18-lts" -ErrorAction SilentlyContinue
+New-AzWebApp -Name $webApp -Location $location -AppServicePlan $appServicePlan -ResourceGroupName $resourceGroup
