@@ -174,7 +174,96 @@ Im **Azure-Portal** unter **Application Insights**:
 - Live-Metriken
 - Performance-Diagramme
 - HTTP-Antwortstatus
-- Optional: Warnungen mit **Action Groups** per E-Mail
+
+
+---
+
+## 7. Streamlit-Dashboard integrieren
+
+Um die Inventar-API benutzerfreundlich darzustellen und Monitoring-Daten visuell aufzubereiten, wurde ein interaktives Dashboard mit **Streamlit** entwickelt. Das Dashboard bietet eine Übersicht aller Geräte, ermöglicht das Hinzufügen neuer Einträge und zeigt Live-Metriken aus Azure Application Insights.
+
+### Schritt 1 – Streamlit und Abhängigkeiten installieren
+
+Installiere Streamlit und die benötigten Python-Bibliotheken:
+
+```bash
+pip install streamlit python-dotenv requests pandas matplotlib
+```
+
+### Schritt 2 – Projektstruktur erweitern
+
+Lege im Projektverzeichnis einen neuen Ordner für das Dashboard an:
+
+```
+Projekt/
+└── dashboard/
+    └── app.py         # Streamlit-Hauptdatei
+```
+
+### Schritt 3 – Umgebungsvariablen konfigurieren
+
+Erstelle eine `.env`-Datei im `dashboard/`-Verzeichnis mit den Zugangsdaten für Application Insights:
+
+```
+APPINSIGHTS_APP_ID=<deine-app-id>
+APPINSIGHTS_API_KEY=<dein-api-key>
+```
+
+> Die Datei `.env` muss im selben Verzeichnis wie `app.py` liegen oder explizit geladen werden.
+
+### Schritt 4 – Streamlit-Dashboard programmieren
+
+Das Dashboard umfasst folgende Funktionen:
+
+- **Geräteliste anzeigen:**  
+  Die API wird per `requests.get()` abgefragt und die Geräte werden mit `st.dataframe()` dargestellt.
+
+- **Gerät hinzufügen:**  
+  Über ein Formular (`st.form`) können neue Geräte per `POST /devices` hinzugefügt werden. Nach erfolgreicher Eingabe aktualisiert sich das Dashboard automatisch.
+
+- **Monitoring & Live-Metriken:**  
+  Die Azure Application Insights REST API wird mit einer KQL-Abfrage angesprochen. Die Antwortzeiten der letzten Requests werden als Liniendiagramm mit `matplotlib` visualisiert.
+
+**Beispiel für eine KQL-Abfrage:**
+```kql
+requests
+| where success == true
+| order by timestamp desc
+| take 20
+| project timestamp, duration
+```
+
+### Schritt 5 – Dashboard starten und testen
+
+Starte das Dashboard mit:
+
+```bash
+cd Projekt/dashboard
+streamlit run app.py
+```
+
+Das Dashboard öffnet sich automatisch im Browser unter [http://localhost:8501](http://localhost:8501).
+
+### Ergebnisse
+
+Das Streamlit-Dashboard bietet:
+
+| Bereich        | Beschreibung                                 |
+| -------------- | -------------------------------------------- |
+| Geräteliste    | Dynamisch geladen über `GET /devices`        |
+| Hinzufügen     | Formular für neue Geräte (`POST /devices`)   |
+| Monitoring     | Live-Metriken aus Application Insights       |
+| Infos          | Projekthintergrund und Tech-Stack            |
+
+**Optional erweiterbar:**
+
+- Automatischer Refresh (z.B. alle 10 Sekunden)
+- Fehlerstatistiken (z.B. `success == false`)
+- Integration von Azure Cosmos DB oder Authentifizierung
+
+---
+
+
 
 ---
 
@@ -194,6 +283,8 @@ Im **Azure-Portal** unter **Application Insights**:
 
 - Weitere Endpunkte wie `PUT /devices/:id` oder `DELETE /devices/:id` implementieren.
 - Validierung und Fehlerbehandlung verbessern.
+
+
 
 ---
 
