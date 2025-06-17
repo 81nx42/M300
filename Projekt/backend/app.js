@@ -11,8 +11,49 @@ app.get('/', (req, res) => {
 });
 
 app.get('/devices', (req, res) => {
-  res.json(devices);
+  let tableRows = devices.map(device => `
+    <tr>
+      <td>${device.id || ''}</td>
+      <td>${device.name}</td>
+      <td>${device.serialNumber}</td>
+      <td>${device.user}</td>
+    </tr>
+  `).join('');
+
+  let html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Geräteliste</title>
+      <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+      </style>
+    </head>
+    <body>
+      <h1>Inventarliste</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Gerätename</th>
+            <th>Seriennummer</th>
+            <th>Benutzer</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${tableRows}
+        </tbody>
+      </table>
+    </body>
+    </html>
+  `;
+
+  res.send(html);
 });
+
 
 app.post('/devices', (req, res) => {
   const device = req.body;
