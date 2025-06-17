@@ -2,64 +2,65 @@
 
 ## Einleitung
 
-![](image.png)
+![Projektübersicht](image.png)
 
-Bei dem Modul 300 habe ich eine Inventar-API entwickelt, die in der Azure Cloud gehostet wird. Mein Ziel bei diesem Projekt war es des vertieften ablauf von Cloud-Services zu verstehen und dazu ein einfaches Backend aufzubauen. Das Backend wird in Azure bereitgestellt und mit Monitoring-Tools überwacht.
+Im Rahmen des Moduls 300 habe ich eine Inventar-API entwickelt, die in der Azure Cloud gehostet wird. Ziel des Projekts war es, die Abläufe von Cloud-Services praktisch zu verstehen und ein einfaches Backend bereitzustellen. Das Backend läuft in Azure und wird mit Monitoring-Tools überwacht.
 
-Die API wurde mit Node 22 TLS implementiert und ermöglicht das Abrufen und Hinzufügen von Geräten über HTTP-Endpoints.
+Die API wurde mit Node.js 22 LTS entwickelt und ermöglicht das Abrufen sowie Hinzufügen von Geräten über HTTP-Endpunkte.
 
-## Dokumentation
+---
 
-#### Vorbereitung
+## Projektstruktur
 
-Mein erster schritt war es eine VS Code Hirarchie zu bauen. In Meinem Projekt befinden sich die folgenden Ordner:
+Die Projektstruktur ist übersichtlich in folgende Ordner gegliedert:
 
-- Projekt
-  - backend
-    - app.js
-    - package.json
-  - docs
-    - screenshots
-      - image.png
-  - scripts
-    - deploy.ps1
-    - setup-monitoring.ps1
-  - Readme.md
+```
+Projekt/
+├── backend/
+│   ├── app.js
+│   └── package.json
+├── docs/
+│   └── screenshots/
+│       └── image.png
+├── scripts/
+│   ├── deploy.ps1
+│   └── setup-monitoring.ps1
+└── Readme.md
+```
 
+- **backend/**: Enthält den Quellcode der API.
+- **docs/**: Dokumentation und Screenshots.
+- **scripts/**: PowerShell-Skripte für Deployment und Monitoring.
+- **Readme.md**: Übersicht und Einstieg ins Projekt.
 
-#### Was die Dateien tun
+---
 
-Die Backend API läuft in Azure App Service.
-Es bietet Endpunkte für GET POST /Devices 
+## Funktionsübersicht
 
+- **Backend API**: Läuft als Azure App Service (Linux, Node.js 22).
+- **Endpoints**: `GET /devices`, `POST /devices`
+- **Deployment**: Automatisiert via PowerShell-Skripte.
+- **Monitoring**: Integration mit Application Insights.
 
-Azure App Servuce Hostet meine API in einer Linux Umgebung mit Node 22. Stack
+---
 
-Die Powershell Skripte werden mir dabei helfen bei der Erstellung von Ressourcen. 
+## Schritt-für-Schritt-Anleitung
 
-Unteranderem Sind die Powershell skripte auch dazu da um alles zu Monitoren unter Application Insights. 
-
-## Anleitung:
-
-
-# Schritt 1 – Node.js Backend entwickeln
+### 1. Node.js Backend entwickeln
 
 Im Ordner `backend`:
 
-## npm initialisieren
-
+**npm initialisieren**
 ```bash
 npm init -y
 ```
 
-## Express installieren
-
+**Express installieren**
 ```bash
 npm install express
 ```
 
-## Datei `app.js` erstellen
-
+**Datei `app.js` erstellen**
 ```javascript
 const express = require('express');
 const app = express();
@@ -70,26 +71,27 @@ let devices = [];
 app.use(express.json());
 
 app.get('/devices', (req, res) => {
-  res.json(devices);
+    res.json(devices);
 });
 
 app.post('/devices', (req, res) => {
-  const device = req.body;
-  devices.push(device);
-  res.status(201).json({ message: 'Gerät hinzugefügt', device });
+    const device = req.body;
+    devices.push(device);
+    res.status(201).json({ message: 'Gerät hinzugefügt', device });
 });
 
 app.listen(port, () => {
-  console.log(`Server läuft auf Port ${port}`);
+    console.log(`Server läuft auf Port ${port}`);
 });
 ```
 
 ---
 
-# Schritt 3 – Azure-Deployment vorbereiten
+### 2. Deployment auf Azure vorbereiten
 
-Erstelle die Datei `scripts/deploy.ps1` mit folgendem Inhalt:
+Im Ordner `scripts`:
 
+**`deploy.ps1` erstellen**
 ```powershell
 $resourceGroup = "m300-projekt-rg"
 $location = "westeurope"
@@ -100,80 +102,103 @@ Connect-AzAccount
 
 New-AzResourceGroup -Name $resourceGroup -Location $location -ErrorAction SilentlyContinue
 New-AzAppServicePlan -Name $appServicePlan -Location $location -ResourceGroupName $resourceGroup -Tier Free -ErrorAction SilentlyContinue
-New-AzWebApp -Name $webApp -Location $location -AppServicePlan $appServicePlan -ResourceGroupName $resourceGroup -Runtime "NODE|18-lts" -ErrorAction SilentlyContinue
+New-AzWebApp -Name $webApp -Location $location -AppServicePlan $appServicePlan -ResourceGroupName $resourceGroup -Runtime "NODE|22-lts" -ErrorAction SilentlyContinue
 ```
 
-## Ausführen über PowerShell:
-
+**Skript ausführen**
 ```powershell
 .\deploy.ps1
 ```
 
 ---
 
-# Schritt 4 – Application Insights verknüpfen
+### 3. Application Insights einrichten
 
-Erstelle die Datei `setup-monitoring.ps1` mit folgendem Inhalt:
-
+**`setup-monitoring.ps1` erstellen**
 ```powershell
 $resourceGroup = "m300-projekt-rg"
 $webApp = "m300-inventar-api"
 $appInsightsName = "m300-appinsights-noah"
+$location = "westeurope"
 
 $insights = New-AzApplicationInsights -ResourceGroupName $resourceGroup -Name $appInsightsName -Location $location -Kind web
 Set-AzWebApp -ResourceGroupName $resourceGroup -Name $webApp -AppSettings @{ "APPINSIGHTS_INSTRUMENTATIONKEY" = $insights.InstrumentationKey }
 ```
 
-## Ausführen über PowerShell:
-
+**Skript ausführen**
 ```powershell
 .\setup-monitoring.ps1
 ```
 
 ---
 
-# Schritt 5 – Backend deployen
+### 4. Backend deployen
 
-Ich habe **VS Code** und die **Azure App Service Extension** verwendet:
+Mit **VS Code** und der **Azure App Service Extension**:
 
-- Rechtsklick auf Web App (im Azure-Explorer)
-- „**Deploy to Web App**“
-- Ordner `backend` auswählen
-- Azure lädt den Code automatisch hoch
+1. Rechtsklick auf die Web App im Azure-Explorer
+2. „**Deploy to Web App**“ auswählen
+3. Ordner `backend` auswählen
+4. Azure lädt den Code automatisch hoch
 
 ---
 
-# Schritt 6 – API testen
+### 5. API testen
 
-## GET-Anfrage:
-
+**GET-Anfrage**
 ```http
-https://m300-inventar-api.azurewebsites.net/devices
+GET https://m300-inventar-api.azurewebsites.net/devices
 ```
 
-## POST-Anfrage:
-
+**POST-Anfrage**
 ```http
 POST /devices
 Content-Type: application/json
 
 {
-  "name": "Laptop Dell",
-  "serialNumber": "ABC123",
-  "user": "Max Muster"
+    "name": "Laptop Dell",
+    "serialNumber": "ABC123",
+    "user": "Max Muster"
 }
 ```
 
-Ich habe **Postman** verwendet und getestet, ob Geräte korrekt gespeichert und zurückgegeben werden.
+Testen mit **Postman** oder **curl**.
 
 ---
 
-# Schritt 7 – Monitoring prüfen
+### 6. Monitoring prüfen
 
 Im **Azure-Portal** unter **Application Insights**:
 
 - Fehler (500er)
 - Live-Metriken
 - Performance-Diagramme
-- HTTP-Antwortstatus prüfen
-- Optional: Warnungen mit **Action Groups** per E-Mail senden
+- HTTP-Antwortstatus
+- Optional: Warnungen mit **Action Groups** per E-Mail
+
+---
+
+## Weiterführende Schritte
+
+### 7. Readme und Dokumentation pflegen
+
+- Die Datei `Readme.md` im Hauptverzeichnis bietet eine Übersicht und Einstiegshilfe.
+- Screenshots und weitere Dokumentation werden im Ordner `docs/screenshots` abgelegt.
+
+### 8. Skripte erweitern
+
+- Die PowerShell-Skripte können um automatische Backups, Rollbacks oder weitere Monitoring-Optionen ergänzt werden.
+- Beispiel: Skript für automatisches Löschen der Ressourcen nach Projektende.
+
+### 9. API erweitern
+
+- Weitere Endpunkte wie `PUT /devices/:id` oder `DELETE /devices/:id` implementieren.
+- Validierung und Fehlerbehandlung verbessern.
+
+---
+
+## Fazit
+
+Mit dieser Schritt-für-Schritt-Anleitung kann das Projekt einfach nachgebaut, erweitert und in Azure betrieben werden. Die klare Ordnerstruktur und Automatisierungsskripte erleichtern Wartung und Weiterentwicklung.
+
+
