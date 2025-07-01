@@ -285,6 +285,45 @@ Monitoring ist Live :
 
 ---
 
+## Security Erweiterung
+
+In diesem Teil geht es um den zugriff auf die API. In dieser Anleitung wird erklärt, wie man nur jeweils ausgewählte Benutzer Zugriff auf die API gewährt.
+
+### Schritt 1 – Azure Protal 
+
+Gehe zu Networking unter deiner Webapp.
+
+Klicke auf Networking und wähle die Option **Add inbound port rule**.
+
+#### Regel 1
+- Dies wird die Regel sein das nur deine Ip Adresse zugriff hat.
+
+Name: AllowMyIP
+
+Action: Allow
+
+Priority: 100
+
+IP Address Block: "Your IP Address"
+
+Description: Mein Gerät
+#### Regel 2
+
+- Dies wird die Regel sein das niemand zugriff hat.
+
+Name: DenyAll
+
+Action: Deny
+
+IP Range: 0.0.0.0/0
+
+
+
+Nun Sollte es am Ende so aussehen:
+
+![alt text](image-3.png)
+
+--- 
 ## Fazit
 
 Mit dieser Schritt-für-Schritt-Anleitung kann das Projekt einfach nachgebaut, erweitert und in Azure betrieben werden. Die klare Ordnerstruktur und Automatisierungsskripte erleichtern Wartung und Weiterentwicklung.
