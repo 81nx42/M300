@@ -323,6 +323,35 @@ Nun Sollte es am Ende so aussehen:
 
 ![alt text](image-3.png)
 
+
+### Schritt 2 - Steamlit Loggin
+Damit nicht Jeder Zugriff hat kann man ein Login System einbauen. Dazu muss man die Datei `app.py` editieren.
+
+Zuerst muss man die Umgebungsvariablen in der `.env` Datei ändern.
+
+```
+DASHBOARD_USER=admin
+DASHBOARD_PASSWORD=adminpassword
+```
+
+Dann muss man die Funktion `login()` in der Datei `app.py` ändern.
+
+```python
+def login():
+    st.set_page_config(page_title="Login", layout="centered")
+    st.title("🔐 Admin Login")
+    username = st.text_input("Benutzername")
+    password = st.text_input("Passwort", type="password")
+    if st.button("Einloggen"):
+        if username == USERNAME and password == PASSWORD:
+            st.session_state["authenticated"] = True
+            st.success("✅ Login erfolgreich")
+            st.experimental_rerun()
+        else:
+            st.error("❌ Zugangsdaten ungültig")
+```
+Nun Sollte es am Ende so aussehen:
+![alt text](image-4.png)
 --- 
 ## Fazit
 

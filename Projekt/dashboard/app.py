@@ -1,5 +1,3 @@
-# dashboard/app.py
-
 import streamlit as st
 import requests
 import pandas as pd
@@ -12,6 +10,33 @@ from datetime import datetime
 load_dotenv()
 APP_ID = os.getenv("APPINSIGHTS_APP_ID")
 API_KEY = os.getenv("APPINSIGHTS_API_KEY")
+USERNAME = os.getenv("DASHBOARD_USER")
+PASSWORD = os.getenv("DASHBOARD_PASSWORD")
+
+# --- Session State: Login prüfen ---
+if "authenticated" not in st.session_state:
+    st.session_state["authenticated"] = False
+
+def login():
+    st.set_page_config(page_title="Login", layout="centered")
+    st.title("🔐 Admin Login")
+    username = st.text_input("Benutzername")
+    password = st.text_input("Passwort", type="password")
+    if st.button("Einloggen"):
+        if username == USERNAME and password == PASSWORD:
+            st.session_state["authenticated"] = True
+            st.success("✅ Login erfolgreich")
+            st.experimental_rerun()
+        else:
+            st.error("❌ Zugangsdaten ungültig")
+
+if not st.session_state["authenticated"]:
+    login()
+    st.stop()
+
+# --------------------------------------
+# ✅ Ab hier: Nur sichtbar nach Login
+# --------------------------------------
 
 # --- API-URL deiner WebApp ---
 API_URL = "https://m300-inventar-api-55-h7aje5f2d7akdude.westeurope-01.azurewebsites.net/devices"
@@ -62,7 +87,7 @@ with st.form("add_device"):
             resp = requests.post(API_URL, json=new_device)
             if resp.status_code == 201:
                 st.success("✅ Gerät erfolgreich hinzugefügt.")
-                st.rerun()  # ersetzt experimental_rerun()
+                st.rerun()
             else:
                 st.error(f"❌ Fehler beim Hinzufügen: {resp.status_code}")
         except Exception as e:
@@ -126,5 +151,5 @@ st.markdown("""
 - **Hosting**: Azure App Service (Linux)  
 - **Deployment**: PowerShell + VS Code Extension  
 - **Monitoring**: Application Insights (per REST API)  
-- **Sicherheit**: Zugriffsbeschränkung via IP-Filter (Access Restrictions)
+- **Sicherheit**: Zugriffsbeschränkung via IP-Filter + Login-System
 """)
