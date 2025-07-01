@@ -2,7 +2,7 @@
 
 ## Einleitung
 
-![alt text](<ChatGPT Image 1. Juli 2025, 13_51_18.png>)
+![alt text](<Draw Io Struktur.png>)
 
 Im Rahmen des Moduls 300 habe ich eine Inventar-API entwickelt, die in der Azure Cloud gehostet wird. Ziel des Projekts war es, die Abläufe von Cloud-Services praktisch zu verstehen und ein einfaches Backend bereitzustellen. Das Backend läuft in Azure und wird mit Monitoring-Tools überwacht.
 
