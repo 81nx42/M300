@@ -2,7 +2,7 @@
 
 ## Einleitung
 
-![Projektübersicht](image.png)
+![alt text](<ChatGPT Image 1. Juli 2025, 13_51_18.png>)
 
 Im Rahmen des Moduls 300 habe ich eine Inventar-API entwickelt, die in der Azure Cloud gehostet wird. Ziel des Projekts war es, die Abläufe von Cloud-Services praktisch zu verstehen und ein einfaches Backend bereitzustellen. Das Backend läuft in Azure und wird mit Monitoring-Tools überwacht.
 
@@ -109,7 +109,8 @@ New-AzWebApp -Name $webApp -Location $location -AppServicePlan $appServicePlan -
 ```powershell
 .\deploy.ps1
 ```
-
+Wenn du dan Via Azure deine Inventar API öffnest sollte du einen Link für folgende seite bekommen: 
+![alt text](image-2.png)
 ---
 
 ### 3. Application Insights einrichten
@@ -142,6 +143,10 @@ Mit **VS Code** und der **Azure App Service Extension**:
 3. Ordner `backend` auswählen
 4. Azure lädt den Code automatisch hoch
 
+Nun kannst du auch dies Kontrollieren oder anderst ausführen, falls es bei dir nicht funktioniert wie gewünscht. Gehe dazu auf die Kudu seite `https://m300-inventar-api-55-h7aje5f2d7akdude.scm.azurewebsites.net/dev/appsettings/settings` und ändere die Einstellungen. Beziehungsweise wenn deine API nicht aussieht wie auf Bild2 (Sieh bild2) Ist es eine möglichkeit es anderst zu versuchen.
+![alt text](wwwroot.png)
+Bild2:
+![alt text](image-1.png)
 ---
 
 ### 5. API testen
@@ -182,6 +187,12 @@ Im **Azure-Portal** unter **Application Insights**:
 
 
 ---
+### Darstellung der Daten
+
+Nun ist unser Inventar mit den Devices,  verfügbar unter `https://m300-inventar-api-55-h7aje5f2d7akdude.westeurope-01.azurewebsites.net/devices` . Dies sieht recht unordentlich aus wesshalb ich mich dazu entscheiden habe die darstellung zu ändern. Im nächsten teil wird ein Streamlit Dashboard erstellt.
+![alt text](<Inventar Api Devices.png>)
+
+
 
 ## 7. Streamlit-Dashboard integrieren
 
