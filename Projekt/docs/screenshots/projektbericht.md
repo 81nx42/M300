@@ -110,6 +110,7 @@ New-AzWebApp -Name $webApp -Location $location -AppServicePlan $appServicePlan -
 .\deploy.ps1
 ```
 Wenn du dan Via Azure deine Inventar API öffnest sollte du einen Link für folgende seite bekommen: 
+
 ![alt text](image-2.png)
 ---
 
