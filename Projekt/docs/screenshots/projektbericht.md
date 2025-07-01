@@ -352,6 +352,35 @@ def login():
 ```
 Nun Sollte es am Ende so aussehen:
 ![alt text](image-4.png)
+
+### Weitere Add-Ons 
+
+#### Inventar Update/Delete
+
+Um Inventar-Einträge zu aktualisieren oder zu löschen, kann man eine Funktion in Steamlit einbauen. Dazu muss man die Datei `app.py` editieren.
+
+Zuerst muss man die Umgebungsvariablen in der `.env` Datei ändern.
+
+```
+DASHBOARD_USER=admin
+DASHBOARD_PASSWORD=adminpassword
+```
+
+Dann muss man die Funktion `update_device()` in der Datei `app.py` ändern.
+
+```python
+def update_device(id, name, serial, user):
+    try:
+        resp = requests.put(f"{API_URL}/{id}", json={"name": name, "serialNumber": serial, "user": user})
+        if resp.status_code == 200:
+            st.success("✅ Gerät aktualisiert.")
+            st.rerun()
+        else:
+            st.error(f"Fehler: {resp.status_code}")
+    except Exception as e:
+        st.error(f"Fehler: {e}")
+
+```
 --- 
 ## Fazit
 

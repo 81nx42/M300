@@ -182,7 +182,7 @@ Das Streamlit-Dashboard wurde implementiert, um die API-Daten visuell darzustell
 
 # 7. Tag – Lernjournal
 ### Zusammenfassung des Tages
-Am letzten Projekttag wurden Dokumentation, Readme und Screenshots gepflegt. Zudem erfolgte ein kompletter Testlauf von der API bis zum Dashboard. Abschließend wurde über Erweiterungsmöglichkeiten (z.B. PUT/DELETE-Endpunkte) reflektiert.
+Am letzten Projekttag wurden Dokumentation, Readme und Screenshots gepflegt. Zudem erfolgte ein kompletter Testlauf von der API bis zum Dashboard. Abschließend wurde über Erweiterungsmöglichkeiten (z.B. PUT/DELETE-Endpunkte) reflektiert. Unteranderem Erweitere ich auch mein Projekt mit Security Feautres wie Login und IP-Filter. Auch versuche ich noch Eine funktion bei Steamlit einzubauen, dass es mir ermöglicht inventar einträge zu aktualisieren oder zu löschen.
 
 ### Tagesziele
 - Projektdokumentation abschließen
@@ -191,12 +191,22 @@ Am letzten Projekttag wurden Dokumentation, Readme und Screenshots gepflegt. Zud
 
 - Abschlussprüfung und Funktionstest
 
+- Security Erweiterung IP-Filter und Login
+
+- Steamlit Inventar Update/Delete Funktion
+
 ### Erreichte Tagesziele
 - Readme mit Projektbeschreibung, Setup-Anleitung und Screenshots ergänzt
 
 - Ordnerstruktur finalisiert
 
 - Projekt vollständig getestet (inkl. Monitoring & Dashboard)
+
+- Steamlit Login System eingebaut
+
+- Ip Filter eingebaut
+
+- Steamlit Inventar Update/Delete Funktion
 
 ### Probleme & Herausforderungen
 - Kein größeres technisches Problem – Fokus lag auf Qualitätssicherung
