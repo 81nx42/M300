@@ -129,8 +129,9 @@ Set-AzWebApp -ResourceGroupName $resourceGroup -Name $webApp -AppSettings @{ "AP
 ```powershell
 .\setup-monitoring.ps1
 ```
+Ziel: 
+![alt text](<Monitoring setup.png>)
 
----
 
 ### 4. Backend deployen
 
@@ -163,6 +164,10 @@ Content-Type: application/json
 ```
 
 Testen mit **Postman** oder **curl**.
+
+### Extra Step. Inventar füllen
+
+Unter `Backend/` befinden sich ein Python Skript welches 100 Geräte generiert und per POST an die API gesendet wird. Dieses script wird hier in der Command zeile ausgeführt. Script Name : `send_parallel_requests_updated.py`
 
 ---
 
@@ -244,7 +249,7 @@ streamlit run app.py
 
 Das Dashboard öffnet sich automatisch im Browser unter [http://localhost:8501](http://localhost:8501).
 
-### Ergebnisse
+### Ergebnisse & Tests
 
 Das Streamlit-Dashboard bietet:
 
@@ -255,35 +260,15 @@ Das Streamlit-Dashboard bietet:
 | Monitoring     | Live-Metriken aus Application Insights       |
 | Infos          | Projekthintergrund und Tech-Stack            |
 
-**Optional erweiterbar:**
 
-- Automatischer Refresh (z.B. alle 10 Sekunden)
-- Fehlerstatistiken (z.B. `success == false`)
-- Integration von Azure Cosmos DB oder Authentifizierung
+### Funktionalität
 
----
-
-
-
----
-
-## Weiterführende Schritte
-
-### 7. Readme und Dokumentation pflegen
-
-- Die Datei `Readme.md` im Hauptverzeichnis bietet eine Übersicht und Einstiegshilfe.
-- Screenshots und weitere Dokumentation werden im Ordner `docs/screenshots` abgelegt.
-
-### 8. Skripte erweitern
-
-- Die PowerShell-Skripte können um automatische Backups, Rollbacks oder weitere Monitoring-Optionen ergänzt werden.
-- Beispiel: Skript für automatisches Löschen der Ressourcen nach Projektende.
-
-### 9. API erweitern
-
-- Weitere Endpunkte wie `PUT /devices/:id` oder `DELETE /devices/:id` implementieren.
-- Validierung und Fehlerbehandlung verbessern.
-
+Liste ladet:
+![alt text](<Inventar api Steamlit.png>)
+Hinzufügen funktioniert :
+![alt text](<Add test Device in Steamlit.png>)
+Monitoring ist Live : 
+![alt text](<Appli insights live .png>)
 
 
 ---
