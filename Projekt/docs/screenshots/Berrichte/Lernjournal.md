@@ -32,12 +32,6 @@ Der erste Tag diente dem Einstieg in das Projekt. Ich verschaffte mir einen Übe
 
 - Eigene Notizen zur Projektstrukturierung
 
-### Beispiele aus vorangegangenen Projekten
-
-Verweise auf Ergebnisse / Übungen / Dokumentationen
-backend/app.js – Erste Version des API-Backends
-
-backend/package.json – Initialisierte Abhängigkeiten
 ---
 # 2. Tag – Lernjournal
 ### Zusammenfassung des Tages
@@ -68,7 +62,7 @@ Heute wurde das Deployment auf Azure vorbereitet. Der Fokus lag auf dem Erstelle
 - Microsoft PowerShell Azure-Dokumentation
 
 - Eigene Tests und Debugging mit -ErrorAction SilentlyContinue
-
+--- 
 # 3. Tag – Lernjournal
 ### Zusammenfassung des Tages
 Der Fokus lag auf der Konfiguration und dem Upload des Node.js-Backends in Azure. Das Deployment wurde mit Visual Studio Code und der Azure App Service Extension durchgeführt. Die API war nach dem Upload unter der bereitgestellten URL erreichbar. Erste Tests mit GET /devices verliefen erfolgreich.
@@ -97,6 +91,7 @@ Der Fokus lag auf der Konfiguration und dem Upload des Node.js-Backends in Azure
 
 - Azure-WebApp 
 
+---
 
 # 4. Tag – Lernjournal
 ### Zusammenfassung des Tages
@@ -121,6 +116,7 @@ Heute stand das Einrichten von Application Insights zur Überwachung der API im 
 
 - Monitoring zeigte zunächst keine Daten – API ist nicht Live
 
+---
 
 # 5. Tag – Lernjournal
 ### Zusammenfassung des Tages
@@ -150,6 +146,7 @@ Heute wurde das API-Testing vertieft. Mit Postman und curl wurden GET- und POST-
 
 - curl-Befehle für API-Tests
 
+---
 
 # 6. Tag – Lernjournal
 ### Zusammenfassung des Tages
@@ -181,6 +178,7 @@ Das Streamlit-Dashboard wurde implementiert, um die API-Daten visuell darzustell
 
 - python-dotenv zum Laden der Umgebungsvariablen
 
+---
 
 # 7. Tag – Lernjournal
 ### Zusammenfassung des Tages
